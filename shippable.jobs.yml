@@ -1,5 +1,5 @@
 jobs:
-  - name: spaceBar1
+  - name: alpha
     type: runSh
     steps:
       - IN: runImageIN
@@ -14,11 +14,10 @@ jobs:
       - script: echo 'This block executes after TASK section fails'
       - NOTIFY: slack
       
-  - name: dv-man
+  - name: bravo
     type: manifest
     steps:
       - IN: runImageIN
-        pull: false
       - TASK: managed
     on_success:
       - script: echo 'this is on_success step of dv-man of type manifest'
@@ -27,7 +26,7 @@ jobs:
     flags:
       - run
 
-  - name: spaceBar2
+  - name: charlie
     type: runSh
     steps:
       - IN: sample-script
@@ -38,14 +37,14 @@ jobs:
         - script: tree -F IN
         - script: IN/sample-script-dup/gitRepo/echo.sh
  
-  - name: box-test
+  - name: delta
     type: deploy
     steps:
-      - IN: dv-man
+      - IN: bravo
       - TASK: managed
         deployMethod: upgrade
         
-  - name: dv-man
+  - name: tango
     type: manifest
     steps:
       - IN: dv-image
@@ -62,7 +61,7 @@ jobs:
     flags:
       - dv
 
-  - name: dv-man-versionName
+  - name: xray
     type: manifest
     steps:
       - IN: dv-image
@@ -100,7 +99,6 @@ jobs:
   - name: box-test
     type: deploy
     steps:
-      - IN: box-man
       - IN: env-test
       - TASK: managed
         deployMethod: upgrade
